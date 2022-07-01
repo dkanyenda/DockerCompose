@@ -1,0 +1,33 @@
+version: '3'
+
+networks:
+ app-network:
+  driver: bridge
+services:
+  web:
+    build: ./nodejs
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    command: apt -y install nodejs npm
+    command: npm install
+    command: npm run dev
+    command: npm install -g ember-cli@2.4.3
+    command: npm install -g bower
+    command: bower install
+    command: git clone https://github.com/mintme-com/pool.git
+    command: cd pool
+    command: make
+    command: /usr/app/build/bin/webchain-pool config.json
+    ports:
+      - "3000:3000"
+      - "8080:80"
+      - "39573:39573"
+  nginx:
+    image: nginx
+  redis:
+    image: redis:2.8
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+            - app-network
