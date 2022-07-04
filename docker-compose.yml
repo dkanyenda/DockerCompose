@@ -9,16 +9,15 @@ services:
     volumes:
       - .:/usr/app/
       - /usr/app/node_modules
-    command: apt -y install nodejs npm
+    command: git clone https://github.com/mintme-com/pool.git
+    command: cd pool
+    command: make
+    command: /usr/app/build/bin/webchain-pool config.json
     command: npm install
     command: npm run dev
     command: npm install -g ember-cli@2.4.3
     command: npm install -g bower
     command: bower install
-    command: git clone https://github.com/mintme-com/pool.git
-    command: cd pool
-    command: make
-    command: /usr/app/build/bin/webchain-pool config.json
     ports:
       - "3000:3000"
       - "8080:80"
