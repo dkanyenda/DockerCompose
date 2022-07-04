@@ -9,6 +9,11 @@ services:
     volumes:
       - .:/usr/app/
       - /usr/app/node_modules
+    command: apt-get install -y build-essential
+    command: git clone https://github.com/etclabscore/core-geth.git
+    command: cd core-geth
+    command: make all
+    command: ./build/bin/geth --mintme
     command: git clone https://github.com/mintme-com/pool.git
     command: cd pool
     command: make
